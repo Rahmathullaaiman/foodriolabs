@@ -3,6 +3,10 @@ const express = require('express')
 
 const usercontroll = require('../controller/usercontroll')
 const menuscontroll = require('../controller/menucontroll')
+const otpcontroll = require('../controller/nodemailer')
+
+
+
 
 
 const multerconfig = require('../Middlewares/multer')
@@ -14,10 +18,18 @@ const router = new express.Router()
 
 //Router paths-->
 //register
-router.post('/user/register',usercontroll.register)
+router.post('/user/reg',usercontroll.register)
+router.post('/user/otp',usercontroll.verifyOTP)
+
+router.put('/users/block/:id',usercontroll.blockuser);
+
+
 
 //login
 router.post('/user/login',usercontroll.login)
+
+router.post('/sendmail',otpcontroll.sendEmail)
+
 
 //edituser to admin
 

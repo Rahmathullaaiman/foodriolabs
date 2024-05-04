@@ -1,40 +1,42 @@
-//import mongoose
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-//create scheme
-const usershceme = new mongoose.Schema({
-    username:{
-        type:String,
-        require:true
+const userSchema = new Schema({
+    username: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    userType: {
+        type: String,
+        enum: ['user', 'admin'],
+        default: 'user'
     },
     profile:{
         type:String
     },
-   
-    email:{
-        type:String,
-        require:true,
-        unique:true,
-        valdator(value){
-            if(!validator.isEmail(value))
-            {throw new Error('invalid Email')}
-        }
+    otp: {
+        type: String,
+        required: true
     },
-    password:{
-        type:String,
-        require:true
-       
+    verified: {
+        type: Boolean,
+        default: false
     },
-    userType: {
-        type: String
-    }
-   
+    blocked: {
+        type: Boolean,
+        default: false
+    } 
+});
 
-})
+const users = mongoose.model('users', userSchema);
 
-
-//create modal
-const users = mongoose.model("users",usershceme)
-
-//export
-module.exports = users
+module.exports = users;
